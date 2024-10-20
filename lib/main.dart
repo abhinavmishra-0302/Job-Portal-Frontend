@@ -35,8 +35,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: _isLoading ? SplashScreen() : HomeScreen(), // Show splash screen or main screen
-      home: SignUpPage(),
+      home: _isLoading ? SplashScreen() : HomeScreen(), // Show splash screen or main screen
+      // home: SignUpPage(),
     );
   }
 }

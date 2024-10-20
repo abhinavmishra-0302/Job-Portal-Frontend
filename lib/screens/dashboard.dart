@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:job_portal/components/job_list.dart';
-import 'package:job_portal/components/profile_summary.dart';
-import 'package:job_portal/screens/user_applications.dart';
+
+import '../components/job_list.dart';
+import '../components/profile_summary.dart';
+import '../screens/user_applications.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -11,6 +12,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height -
@@ -18,6 +20,8 @@ class _DashboardState extends State<Dashboard> {
         MediaQuery.of(context).viewPadding.top -
         MediaQuery.of(context).viewPadding.bottom -
         MediaQuery.of(context).viewInsets.top;
+
+    final username = ModalRoute.of(context)?.settings.arguments as String;
 
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +62,7 @@ class _DashboardState extends State<Dashboard> {
       body: SingleChildScrollView( // Added SingleChildScrollView to allow scrolling
         child: Column(
           children: [
-            const ProfileSummary(),
+            ProfileSummary(username: username,),
             Container(
               margin: const EdgeInsets.only(left: 50, top: 50, bottom: 50),
               child: const Text(

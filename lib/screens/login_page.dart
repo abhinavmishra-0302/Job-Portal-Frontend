@@ -13,12 +13,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
-          'username': _emailController.text,
+          'username': _usernameController.text,
           'password': _passwordController.text,
         }),);
 
@@ -40,7 +40,10 @@ class _LoginPageState extends State<LoginPage> {
         print('Login successful: $responseData');
         SnackBar(content: Text('Login Successful.'));
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => Dashboard()),
+          MaterialPageRoute(builder: (context) => Dashboard(),
+          settings: RouteSettings(
+            arguments: _usernameController.text
+          )),
         );
       } else {
         // Handle error
@@ -70,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   TextFormField(
-                    controller: _emailController,
+                    controller: _usernameController,
                     decoration: const InputDecoration(
                       labelText: 'Username',
                       border: OutlineInputBorder(),

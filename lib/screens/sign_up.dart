@@ -78,7 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
       final jobSeekerData = {
         'firstName': firstNameController.text,
         'lastName': lastNameController.text,
-        'username': emailController.text,
+        'username': usernameController.text,
         'email': emailController.text,
         'dateOfBirth': dobController.text,
         'gender': selectedGender,
@@ -147,7 +147,7 @@ class _SignUpPageState extends State<SignUpPage> {
       final jobSeekerData = {
         'firstName': firstNameController.text,
         'lastName': lastNameController.text,
-        'username': emailController.text,
+        'username': usernameController.text,
         'email': emailController.text,
         'dateOfBirth': dobController.text,
         'gender': selectedGender,
