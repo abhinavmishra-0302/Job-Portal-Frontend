@@ -75,15 +75,15 @@ class _LoginPageState extends State<LoginPage> {
                       labelText: 'Username',
                       border: OutlineInputBorder(),
                     ),
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.name,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return 'Please enter your username';
                       }
                       // Add a basic email format validation
-                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                        return 'Please enter a valid email address';
-                      }
+                      // if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      //   return 'Please enter a valid email address';
+                      // }
                       return null;
                     },
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_portal/screens/login_page.dart';
+import 'package:job_portal/screens/sign_up.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -49,7 +50,9 @@ class HomeScreen extends StatelessWidget {
                   width: 150,
                   margin: const EdgeInsets.only(top: 110, left: 75),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SignUpPage()));
+                    },
                     child: const Text('Sign Up', style: TextStyle(fontSize: 20, fontFamily: 'Oswald Bold'),),
                   ),
                 ),
