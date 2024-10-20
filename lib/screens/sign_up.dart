@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:job_portal/screens/dashboard.dart';
 import 'package:job_portal/screens/home_screen.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -128,7 +127,7 @@ class _SignUpPageState extends State<SignUpPage> {
         );
 
         if (authResponse.statusCode == 200) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen()));
           print('Job seeker signed up successfully!');
         } else {
           // Error handling (e.g., display error message)
@@ -201,7 +200,7 @@ class _SignUpPageState extends State<SignUpPage> {
         );
 
         if (authResponse.statusCode == 200) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen()));
           print('Job seeker signed up successfully!');
         } else {
           // Error handling (e.g., display error message)

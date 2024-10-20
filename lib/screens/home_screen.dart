@@ -3,6 +3,8 @@ import 'package:job_portal/screens/login_page.dart';
 import 'package:job_portal/screens/sign_up.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

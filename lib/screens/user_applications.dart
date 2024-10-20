@@ -9,7 +9,7 @@ class JobApplicationsPage extends StatefulWidget {
   final String userId;
   final String jwtToken;
 
-  const JobApplicationsPage({Key? key, required this.userId, required this.jwtToken}) : super(key: key);
+  const JobApplicationsPage({super.key, required this.userId, required this.jwtToken});
 
   @override
   _JobApplicationsPageState createState() => _JobApplicationsPageState();
@@ -57,11 +57,11 @@ class _JobApplicationsPageState extends State<JobApplicationsPage> {
         future: futureJobApplications,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No job applications found.'));
+            return const Center(child: Text('No job applications found.'));
           } else {
             return ListView.builder(
               itemCount: snapshot.data!.length,

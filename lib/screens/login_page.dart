@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import './dashboard.dart';
 
@@ -23,33 +24,74 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _login() async{
+  @override
+  void initState() {
+    super.initState();
+    _checkForStoredToken();
+  }
+
+  // Check if there's a previously stored valid JWT token
+  void _checkForStoredToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('jwt_token');
+
+    if (token != null) {
+      // Validate the token (optional: depends on backend or expiration logic)
+      bool isValid = await _validateToken(token);
+      if (isValid) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const Dashboard(),
+            settings: RouteSettings(arguments: prefs.getString('username')),
+          ),
+        );
+      }
+    }
+  }
+
+  // Validate the JWT token (You can customize this based on your token validation mechanism)
+  Future<bool> _validateToken(String token) async {
+    // Typically, you'd send a request to your backend to check token validity
+    // or decode and check expiration locally.
+    // Assuming token is valid for now.
+    return true; // Simulate token validity for demonstration
+  }
+
+  // Login method to authenticate and store JWT token
+  void _login() async {
     if (_formKey.currentState!.validate()) {
-      final response = await http.post(Uri.parse('http://localhost:8080/api/v1/auth/login'),
+      final response = await http.post(
+        Uri.parse('http://localhost:8080/api/v1/auth/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
           'username': _usernameController.text,
           'password': _passwordController.text,
-        }),);
+        }),
+      );
 
       if (response.statusCode == 200) {
         final responseData = response.body;
-        // Handle success - maybe store the token or navigate to the dashboard
-        print('Login successful: $responseData');
-        SnackBar(content: Text('Login Successful.'));
+        final token = responseData; // Assuming the token is in the response body
+
+        // Store the token and username in SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('jwt_token', token);
+        await prefs.setString('username', _usernameController.text);
+
+        // Navigate to Dashboard
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => Dashboard(),
-          settings: RouteSettings(
-            arguments: _usernameController.text
-          )),
+          MaterialPageRoute(
+            builder: (context) => const Dashboard(),
+            settings: RouteSettings(arguments: _usernameController.text),
+          ),
         );
       } else {
         // Handle error
         print('Login failed: ${response.body}');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login failed, please try again.')),
+          const SnackBar(content: Text('Login failed, please try again.')),
         );
       }
     }
@@ -83,10 +125,6 @@ class _LoginPageState extends State<LoginPage> {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your username';
                       }
-                      // Add a basic email format validation
-                      // if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      //   return 'Please enter a valid email address';
-                      // }
                       return null;
                     },
                   ),
