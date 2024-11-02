@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import './dashboard.dart';
+import './job_seeker_dashboard.dart';
+import 'employer_dashboard.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       if (isValid) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => const Dashboard(),
+            builder: (context) => const JobSeekerDashboard(),
             settings: RouteSettings(arguments: prefs.getString('username')),
           ),
         );
@@ -81,12 +82,25 @@ class _LoginPageState extends State<LoginPage> {
         await prefs.setString('username', _usernameController.text);
 
         // Navigate to Dashboard
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const Dashboard(),
-            settings: RouteSettings(arguments: _usernameController.text),
-          ),
-        );
+
+        if (userType == "Employer") {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const EmployerDashboard(),
+              settings: RouteSettings(arguments: _usernameController.text),
+            ),
+          );
+        } else {
+          // Navigate to Job Seeker Dashboard
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const JobSeekerDashboard(),
+              settings: RouteSettings(arguments: _usernameController.text),
+            ),
+          );
+        }
+
+
       } else {
         // Handle error
         print('Login failed: ${response.body}');
@@ -96,6 +110,8 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
+
+  String userType = "Job Seeker"; // Default selection
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +158,33 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
+                  ),
+                  const SizedBox(height: 32.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("I am a: "),
+                      Radio(
+                        value: "Job Seeker",
+                        groupValue: userType,
+                        onChanged: (value) {
+                          setState(() {
+                            userType = value!;
+                          });
+                        },
+                      ),
+                      Text("Job Seeker"),
+                      Radio(
+                        value: "Employer",
+                        groupValue: userType,
+                        onChanged: (value) {
+                          setState(() {
+                            userType = value!;
+                          });
+                        },
+                      ),
+                      Text("Employer"),
+                    ],
                   ),
                   const SizedBox(height: 32.0),
                   ElevatedButton(

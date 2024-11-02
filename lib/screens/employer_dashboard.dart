@@ -1,19 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../components/job_list.dart';
-import '../components/profile_summary.dart';
-import '../screens/user_applications.dart';
+class EmployerDashboard extends StatelessWidget {
+  const EmployerDashboard({super.key});
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
-
-  @override
-  State<Dashboard> createState() => _DashboardState();
-}
-
-class _DashboardState extends State<Dashboard> {
-
-  @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height -
         MediaQuery.of(context).viewInsets.bottom -
@@ -39,14 +28,7 @@ class _DashboardState extends State<Dashboard> {
           Container(
             margin: const EdgeInsets.only(right: 20),
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const JobApplicationsPage(
-                    userId: '3',
-                    jwtToken: 'token',
-                  ),
-                ));
-              },
+              onPressed: () {},
               child: const Text("My Applications"),
             ),
           ),
@@ -62,7 +44,6 @@ class _DashboardState extends State<Dashboard> {
       body: SingleChildScrollView( // Added SingleChildScrollView to allow scrolling
         child: Column(
           children: [
-            ProfileSummary(username: username,),
             Container(
               margin: const EdgeInsets.only(left: 50, top: 50, bottom: 50),
               child: const Text(
@@ -70,10 +51,10 @@ class _DashboardState extends State<Dashboard> {
                 style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
               ),
             ),
-            JobList(height: height)
           ],
         ),
       ),
     );
   }
+
 }
