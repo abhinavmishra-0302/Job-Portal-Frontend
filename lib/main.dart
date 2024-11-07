@@ -1,5 +1,6 @@
 // main.dart
 import 'package:flutter/material.dart';
+import 'package:job_portal/screens/employer_dashboard.dart';
 import './screens/splash_screen.dart'; // Import the splash screen
 import './screens/home_screen.dart'; // Import your main home screen
 
@@ -34,8 +35,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: _isLoading ? const SplashScreen() : const HomeScreen(), // Show splash screen or main screen
-      // home: SignUpPage(),
+      // home: _isLoading ? const SplashScreen() : const HomeScreen(), // Show splash screen or main screen
+      home: EmployerDashboard(),
     );
   }
 }

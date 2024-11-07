@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _checkForStoredToken();
+    // _checkForStoredToken();
   }
 
   // Check if there's a previously stored valid JWT token
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
         if (userType == "Employer") {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => const EmployerDashboard(),
+              builder: (context) => EmployerDashboard(),
               settings: RouteSettings(arguments: _usernameController.text),
             ),
           );
